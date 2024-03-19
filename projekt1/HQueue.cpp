@@ -16,8 +16,8 @@ void PriorityQueue::generate_mssg(int n){
     if(size >= n)
     {
     for(int i = 0; i < n; i++){
-        tab[actualsize].data = rand() % 100000;
-        tab[actualsize].priority = rand() % 100 + 1;
+        tab[actualsize].data = rand() % 10;
+        tab[actualsize].priority = rand() % 10000000 + 1;
         actualsize++;
     };
     }else{
@@ -25,6 +25,16 @@ void PriorityQueue::generate_mssg(int n){
         generate_mssg(n);
     };
 };
+void PriorityQueue::generate_mssg_sorted(int n){
+    int j = n;
+    for(int i = 0; i < n; i++)
+    {
+        tab[actualsize].data = rand() % 10;
+        tab[actualsize].priority = j;
+        actualsize++;
+        j--;
+    }
+}
 void PriorityQueue::resize(){
     int newsize = 2 * size;
     Packet *nTab = new Packet[newsize];
@@ -73,8 +83,7 @@ void PriorityQueue::heap_sort(){
                     parent = to_swap;    
                     lchild = parent * 2 + 1;
                     rchild = parent * 2 + 2;
-                } else {break;}
-                
+                } else {break;}   
             }
     }
 }

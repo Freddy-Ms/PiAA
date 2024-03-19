@@ -12,12 +12,13 @@ class PriorityQueue{
         int actualsize;
     public:
     PriorityQueue(int size);
-    ~PriorityQueue();                        // Dwie formy, jedna po kolei dodajemy pakiet i "naprawiamy kopiec" albo od razu
+    ~PriorityQueue();                       
     void add(Packet packet);
     void generate_mssg(int n);
+    void generate_mssg_sorted(int n);
     bool isempty();
-    void show();                        //Pokazuje tylko priority, to jest dla nas najwazniejsze
+    void show();                        
     void make_heap();
     void heap_sort();
     void resize();
-};                                           // generujemy n pakietów i tworzymy kopiec a następnie go całego ściągamy
+};                                           
