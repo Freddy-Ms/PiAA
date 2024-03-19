@@ -7,7 +7,7 @@ struct Packet{
 };
 class PriorityQueue{
     private:
-        Packet * tab;
+        Packet* tab;
         int size;
         int actualsize;
     public:

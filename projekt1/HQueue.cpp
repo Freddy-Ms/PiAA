@@ -41,20 +41,40 @@ void PriorityQueue::show(){
     }
 };
 void PriorityQueue::make_heap(){
-
+    int child,parent;
     for(int i = 1;i<actualsize;i++)
     {
-        int child = i;
-        int parent = (child - 1) / 2;
-        int value = tab[child].priority;
-        while((child > 0) && (tab[parent].priority < value))
+        child = i;
+        parent = (child - 1) / 2;
+        while((child > 0) && (tab[parent].priority < tab[child].priority))
         {
-            tab[child].priority = tab[parent].priority;
+            swap(tab[child],tab[parent]);
             child = parent; parent = (child - 1) / 2;
         }
-        tab[child].priority = value;
     }
 };    
 void PriorityQueue::heap_sort(){
-
-};
+    int parent, lchild, rchild, to_swap;
+    for(int i = actualsize-1;i > 0;i--){
+            swap(tab[0],tab[i]);
+            parent = 0;
+            lchild = 1;
+            rchild = 2;
+            to_swap = parent;
+            while(1){
+                if(lchild < i && tab[lchild].priority > tab[to_swap].priority){
+                    to_swap = lchild;
+                }
+                if(rchild < i && tab[rchild].priority > tab[to_swap].priority){
+                    to_swap = rchild;
+                }
+                if(parent != to_swap){
+                    swap(tab[parent],tab[to_swap]);
+                    parent = to_swap;    
+                    lchild = parent * 2 + 1;
+                    rchild = parent * 2 + 2;
+                } else {break;}
+                
+            }
+    }
+}
