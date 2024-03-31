@@ -13,12 +13,10 @@ class Sort
         void ReadCSV();
         void ReadCSV(int);
         void merge(int left, int middle, int right);
-        friend class Quicksort;
     public:
-        Sort(); // default constructor used with ReadCSV() to get all the data from the csv file
-        Sort(size_t); // constructor used with ReadCSV(int) to get the first n data from the csv file
+        Sort(); // default constructor used  to get all the data from the csv file
+        Sort(size_t); // constructor used get the first n data from the csv file
         ~Sort(); // destructor
-        void clearArray(); // clear the array from -1 values
         int getlines(); // get the number of lines in the csv file
         void printArray(); // print the array
         int getsize(); // get the size of the array

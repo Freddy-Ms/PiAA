@@ -3,6 +3,8 @@
 #include <algorithm> 
 #include<vector>
 #include<random>
+#include<string>
+#include<sstream>
 using namespace std;
 #include"Sort.hpp"
 
@@ -15,9 +17,22 @@ int Sort<T>::getlines()
         cout << "Error opening file" <<  endl;
         return 0;
     }
-    string line;
-    while(getline(file, line))
-            ++lines;
+    string line,token;
+    while (std::getline(file, line)) {
+    std::stringstream ss(line);
+    std::getline(ss, token, ','); 
+    std::getline(ss, token, ','); 
+    std::getline(ss, token, ','); 
+    bool poprawnaOcena = true;
+    try {
+        double ocena = std::stod(token);
+    } catch (const std::invalid_argument& e) {
+        poprawnaOcena = false;
+    }
+    if (!token.empty() && poprawnaOcena) 
+        ++lines;
+
+}
     file.clear();
     file.seekg(0);
     return lines;
@@ -29,7 +44,13 @@ Sort<T>::Sort()
     this->size = getlines();
     this->arr = new T[this->size];
     ReadCSV();
-    clearArray();
+}
+
+template <typename T>
+Sort<T>::Sort(size_t customSize){
+    this->size = customSize;
+    this->arr = new T[this->size];
+    ReadCSV();
 }
 
 template <typename T>
@@ -42,47 +63,6 @@ void Sort<T>::ReadCSV()
     }
     string dummy, data;
     for (int i = 0; i < this->size; i++){
-        getline(file, dummy, ',');
-        getline(file, dummy, ',');
-        getline(file, data);
-        try{
-            this->arr[i] = stoi(data);
-        } catch(const invalid_argument& e){
-            this->arr[i] = -1;
-        }
-    }
-    file.close();
-}
-template <typename T>
-void Sort<T>::clearArray()
-{
-    int space = 0;
-    for (int i = 0; i < this->size; ++i) {
-        if (arr[i] == -1) {
-            space++;
-        } else {
-            this->arr[i - space] = this->arr[i];
-        }
-    }
-    this->size -= space;
-}
-template <typename T>
-Sort<T>::Sort(size_t customSize){
-    this->size = customSize;
-    this->arr = new T[this->size];
-    ReadCSV(customSize);
-    clearArray();
-}
-
-template <typename T>
-void Sort<T>::ReadCSV(int customSize){
-    ifstream file("projekt2_dane.csv");
-    if (!file.is_open()){
-        cout << "Error opening file" <<  endl;
-        return;
-    }
-    string dummy, data;
-    for (int i = 0; i < customSize; i++){
         getline(file, dummy, ',');
         getline(file, dummy, ',');
         getline(file, data);
