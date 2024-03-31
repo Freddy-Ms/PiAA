@@ -1,13 +1,11 @@
 #include <iostream>
+#include <cstddef>
+#include <string>
 using namespace std;
-#include "quicksort.cpp"
+#include "Sort.cpp"
 
 int main(){
-    quicksort q(10);
-    q.readcsv(10);
-    q.quickSort();
-    q.average();
-    q.median();
-    q.printArray();
+    Sort<int> qw();
+    qw.printArray();
     return 0;
 }
