@@ -17,20 +17,20 @@ int Sort<T>::getlines()
         cout << "Error opening file" <<  endl;
         return 0;
     }
-    string line,token;
+    string line,data;
+    size_t position = string::npos;
+    int grade = 0;
     while (std::getline(file, line)) {
-    std::stringstream ss(line);
-    std::getline(ss, token, ','); 
-    std::getline(ss, token, ','); 
-    std::getline(ss, token, ','); 
-    bool poprawnaOcena = true;
+        position = line.find_last_of(",");
+        if(position != string::npos){
+            data = line.substr(position + 1);
     try {
-        double ocena = std::stod(token);
+        grade = std::stoi(data);
+        lines++;
     } catch (const std::invalid_argument& e) {
-        poprawnaOcena = false;
+        
     }
-    if (!token.empty() && poprawnaOcena) 
-        ++lines;
+    }
 
 }
     file.clear();
@@ -61,16 +61,17 @@ void Sort<T>::ReadCSV()
         cout << "Error opening file" <<  endl;
         return;
     }
-    string dummy, data;
-    for (int i = 0; i < this->size; i++){
-        getline(file, dummy, ',');
-        getline(file, dummy, ',');
-        getline(file, data);
+    string line,data;
+    size_t  position = string::npos;
+    for (int i = 0; i < this->size && getline(file,line); i++){
+        position = line.find_last_of(",");
+        if(position != string::npos){
+            data = line.substr(position + 1);
         try{
             this->arr[i] = stoi(data);
         } catch(const invalid_argument& e){
             i--;
-        }
+        }}
     }
     file.close();
 }
