@@ -8,13 +8,23 @@ int main() {
     int n;
     std::cin >> n;
     Sort<int>* s;
-    if (n == 0)
-        s = new Sort<int>();
-    else
-        s = new Sort<int>(n);
-    int choice = 0;
     chrono::high_resolution_clock::time_point start, end;
-    chrono::duration<double> elapsed;
+    chrono::duration<double, std::milli> elapsed;
+
+    if (n == 0){
+        start = std::chrono::high_resolution_clock::now();
+        s = new Sort<int>();
+        end = std::chrono::high_resolution_clock::now();
+        }
+    else{
+        start = std::chrono::high_resolution_clock::now();
+        s = new Sort<int>(n);
+        end = std::chrono::high_resolution_clock::now();}
+
+    elapsed = end - start;
+    std::cout << "Time taken by function: " << elapsed.count() << " miliseconds" << std::endl;
+    int choice = 0;
+
 
     while (true) {
         std::cout << "\nMenu:\n";
@@ -47,21 +57,21 @@ int main() {
             s->quickSort();
             end = std::chrono::high_resolution_clock::now();
             elapsed = end - start;
-            std::cout << "Time taken by function: " << elapsed.count() << " seconds" << std::endl;
+            std::cout << "Time taken by function: " << elapsed.count() << " miliseconds" << std::endl;
             break;
         case 6:
             start = std::chrono::high_resolution_clock::now();
             s->mergeSort();
             end = std::chrono::high_resolution_clock::now();
             elapsed = end - start;
-            std::cout << "Time taken by function: " << elapsed.count() << " seconds" << std::endl;
+            std::cout << "Time taken by function: " << elapsed.count() << " miliseconds" << std::endl;
             break;
         case 7:
             start = std::chrono::high_resolution_clock::now();
             s->bucketSort();
             end = std::chrono::high_resolution_clock::now();
             elapsed = end - start;
-            std::cout << "Time taken by function: " << elapsed.count() << " seconds" << std::endl;
+            std::cout << "Time taken by function: " << elapsed.count() << " miliseconds" << std::endl;
             break;
         case 8:
             s->shuffle();
