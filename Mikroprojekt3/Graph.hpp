@@ -11,6 +11,8 @@ class Graph {
         list<pair<int,int>> *AdjList; // Adjacency List - Lista sąsiedztwa
         void InitializationMatrix(); // Initialize Adjacency Matrix with 0, 0 means there is no edge between two vertices
         void DestroyMatrix(); // Destroy Adjacency Matrix
+        void FullfilZerosMatrix(); // Fill Adjacency Matrix with 0
+        void ClearAdjList(); // Clear Adjacency List
     public:
         Graph(int Vertex); // Constructor
         void addEdge(int V1, int V2, int weight); // Add edge between two vertices
@@ -22,5 +24,6 @@ class Graph {
         void printList(); // Print Adjacency List
         int getVertex(); // Get number of vertices
         int getEdges(); // Get number of edges
+        void generateGraph(int density); // Generate random graph
         ~Graph(); // Destructor
 };
