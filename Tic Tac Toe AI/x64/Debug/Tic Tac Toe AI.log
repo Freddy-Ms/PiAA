@@ -1,0 +1,8 @@
+﻿  GameGUI.cpp
+C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(52,20): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
+C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(238,16): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
+C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(245,32): warning C4267: "=": konwersja z "size_t" do "int", możliwa utrata danych
+C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(246,35): warning C4267: "=": konwersja z "size_t" do "int", możliwa utrata danych
+C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(271,20): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
+C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(294,20): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
+  Tic Tac Toe AI.vcxproj -> C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\x64\Debug\Tic Tac Toe AI.exe
