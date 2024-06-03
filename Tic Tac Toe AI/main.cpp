@@ -3,6 +3,6 @@
 #include "GameGUI.h"
 int main()
     {
-        GameGUI game(5, 4);
+        GameGUI game(3, 3);
        game.run();
     }

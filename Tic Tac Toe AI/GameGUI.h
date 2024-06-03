@@ -1,5 +1,9 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include<iostream>
+using namespace std;
+
+
 class GameGUI
 {
    public:
@@ -19,6 +23,6 @@ class GameGUI
         bool isDraw(); // Check if the game is a draw
         void AITurn(char sign, char opponentSign); // AI turn
         int minimax(char sign, char opponentSign, size_t depth, bool isMaximizingPlayer, int alpha, int beta); // Minimax algorithm with alpha-beta pruning
-        int EvaluateState(char sign, char opponentSign); // Evaluate the board 
+        int EvaluateState(char sign, char opponentSign, size_t depth); // Evaluate the board 
 
 };

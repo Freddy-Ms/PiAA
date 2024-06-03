@@ -13,7 +13,7 @@ GameGUI::GameGUI(int size, int wincondition) : window(sf::VideoMode(800, 600), "
             board[i][j] = ' ';
         }
     }
-    maxDepth = 3; // Default value
+    maxDepth = 9; // Default value
 }
 
 GameGUI::~GameGUI()
@@ -171,7 +171,7 @@ bool GameGUI::isWin(char sign)
     size_t diagonal2 = 0;
     // Searching diagonals
     for (size_t i = 0; i <= this->size - this->wincondition; i++) {
-        for (size_t j = 0; j < size; j++) {
+        for (size_t j = 0; j < this->size; j++) {
             int count1 = 0;
             int count2 = 0;
             for (size_t k = 0; k < this->wincondition; k++) {
@@ -202,7 +202,7 @@ bool GameGUI::isDraw()
 {
     for (size_t i = 0; i < this->size; i++)
     {
-        for (size_t j = 0; this->size; j++)
+        for (size_t j = 0; j < this->size; j++)
         {
             if (board[i][j] == ' ')
                 return false;
@@ -211,25 +211,11 @@ bool GameGUI::isDraw()
     return true;
 }
 
-//void GameGUI::AITurn(char sign, char opponentSign)
-//{
-//    for (size_t i = 0; i < size; i++)
-//    {
-//        for (size_t j = 0; j < size; j++)
-//        {
-//            if (board[i][j] == ' ') {
-//                board[i][j] = sign;
-//                return;
-//            }
-//        }
-//    }
-//}
-void GameGUI::AITurn(char sign, char opponentSign)\
+void GameGUI::AITurn(char sign, char opponentSign)
 {
     int bestScore = INT_MIN;
     int bestRow = -1;
     int bestColumn = -1;
-
 
     for (size_t i = 0; i < this->size; i++)
     {
@@ -237,7 +223,7 @@ void GameGUI::AITurn(char sign, char opponentSign)\
         {
             if (isValidMove(i,j)) {
                 this->board[i][j] = sign;
-                int score = minimax(sign, opponentSign, 0, false, INT_MIN, INT_MAX);
+                int score = minimax(sign, opponentSign, 1, true, INT_MAX, INT_MIN);
                 this->board[i][j] = ' ';
                 if (score > bestScore)
                 {
@@ -248,8 +234,8 @@ void GameGUI::AITurn(char sign, char opponentSign)\
             }
         }
     }
-    if(bestRow != -1 && bestColumn != -1)
-        this->board[bestRow][bestColumn] = sign;
+
+    this->board[bestRow][bestColumn] = sign;
 
 }
 
@@ -257,34 +243,11 @@ int GameGUI::minimax(char sign, char opponentSign, size_t depth, bool isMaximizi
 {
     if (depth == maxDepth || isWin(sign) || isWin(opponentSign) || isDraw()) 
     {
-        return EvaluateState(sign, opponentSign);  
+        return EvaluateState(sign, opponentSign, depth);  
     }
     
   
     if (isMaximizingPlayer)
-    {
-        int bestScore = INT_MIN;
-        for (size_t i = 0; i < this->size; i++)
-        {
-            for (size_t j = 0; j < this->size; j++)
-            {
-                if (isValidMove(i, j))
-                {
-                    this->board[i][j] = sign;
-                    int score = minimax(sign, opponentSign, depth + 1, false, alpha, beta);
-                    this->board[i][j] = ' ';
-                    bestScore = max(bestScore, score);
-                    alpha = max(alpha, bestScore);
-                    if (alpha >= beta)
-                        break;
-                }
-            }
-            if (alpha >= beta)
-                break;
-        }
-        return bestScore;
-    }
-    else
     {
         int bestScore = INT_MAX;
         for (size_t i = 0; i < this->size; i++)
@@ -294,22 +257,45 @@ int GameGUI::minimax(char sign, char opponentSign, size_t depth, bool isMaximizi
                 if (isValidMove(i, j))
                 {
                     this->board[i][j] = opponentSign;
-                    int score = minimax(sign, opponentSign, depth + 1, true, alpha, beta);
+                    int score = minimax(sign, opponentSign, depth + 1, false, alpha, beta);
                     this->board[i][j] = ' ';
                     bestScore = min(bestScore, score);
-                    beta = min(beta, bestScore);
-                    if (alpha >= beta)
+                    alpha = min(alpha, bestScore);
+                    if (alpha <= beta)
                         break;
                 }
             }
-            if (alpha >= beta)
+            if (alpha <= beta)
+                break;
+        }
+        return bestScore;
+    }
+    else
+    {
+        int bestScore = INT_MIN;
+        for (size_t i = 0; i < this->size; i++)
+        {
+            for (size_t j = 0; j < this->size; j++)
+            {
+                if (isValidMove(i, j))
+                {
+                    this->board[i][j] = sign;
+                    int score = minimax(sign, opponentSign, depth + 1, true, alpha, beta);
+                    this->board[i][j] = ' ';
+                    bestScore = max(bestScore, score);
+                    beta = max(beta, bestScore);
+                    if (alpha <= beta)
+                        break;
+                }
+            }
+           if (alpha <= beta)
                 break;
         }
         return bestScore;
     }
 }
 
-int GameGUI::EvaluateState(char sign, char opponentSign)
+int GameGUI::EvaluateState(char sign, char opponentSign, size_t depth)
 {
     size_t rows = 0;
     size_t columns = 0;
@@ -328,7 +314,7 @@ int GameGUI::EvaluateState(char sign, char opponentSign)
             {
                 OpponentRows++;
                 if (OpponentRows == this->wincondition)
-                    return -1;
+                    return -1 - this->maxDepth + depth;
             }
             else
             {
@@ -339,7 +325,7 @@ int GameGUI::EvaluateState(char sign, char opponentSign)
             {
                 rows++;
                 if (rows == this->wincondition)
-                    return 1;
+                    return 1 + this->maxDepth - depth;
             }
             else
             {
@@ -351,7 +337,7 @@ int GameGUI::EvaluateState(char sign, char opponentSign)
             {
                 OpponentColumns++;
                 if (OpponentColumns == this->wincondition)
-                    return -1;
+                    return -1 - this->maxDepth + depth;
             }
             else
             {
@@ -362,7 +348,7 @@ int GameGUI::EvaluateState(char sign, char opponentSign)
             {
                 columns++;
                 if (columns == this->wincondition)
-                    return 1;
+                    return 1 + this->maxDepth - depth;
             }
             else
             {
@@ -388,7 +374,7 @@ int GameGUI::EvaluateState(char sign, char opponentSign)
                 {
                     OpponentCount1++;
                     if (OpponentCount1 == this->wincondition)
-                        return -1;
+                        return -1 - this->maxDepth + depth;
                 }
                 else
                 {
@@ -399,7 +385,7 @@ int GameGUI::EvaluateState(char sign, char opponentSign)
                 {
                     count1++;
                     if (count1 == this->wincondition)
-                        return 1;
+                        return 1 + this->maxDepth - depth;
                 }
                 else
                 {
@@ -410,7 +396,7 @@ int GameGUI::EvaluateState(char sign, char opponentSign)
                 {
                     OpponentCount2++;
                     if (OpponentCount2 == this->wincondition)
-                        return -1;
+                        return -1 - this->maxDepth + depth;
                 }
                 else
                 {
@@ -421,7 +407,7 @@ int GameGUI::EvaluateState(char sign, char opponentSign)
                 {
                     count2++;
                     if (count2 == this->wincondition)
-                        return 1;
+                        return 1 + this->maxDepth - depth;
                 }
                 else
                 {
