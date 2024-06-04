@@ -266,19 +266,20 @@ void GameGUI::AITurn(char AIsign, char playerSign)
 
 int GameGUI::minimax(char AIsign, char playerSign, size_t depth, bool isMaximizingPlayer, int alpha, int beta)
 {
-    if (depth == maxDepth) //|| isWin(AIsign) || isWin(playerSign) || isDraw())
-    {
-        return EvaluateState(AIsign, playerSign, depth);  
-    }
+  
     if(isWin(AIsign))
     {
         return 1 + this->maxDepth - depth;
     }
-    if(isWin(playerSign))
+    else if(isWin(playerSign))
     {
         return -1 - this->maxDepth + depth;
     }
-    if(isDraw())
+    else if(isDraw())
+    {
+        return 0;
+    }
+    else if (depth == maxDepth)
     {
         return 0;
     }
@@ -330,129 +331,4 @@ int GameGUI::minimax(char AIsign, char playerSign, size_t depth, bool isMaximizi
         }
         return bestScore;
     }
-}
-
-int GameGUI::EvaluateState(char AIsign, char playerSign, size_t depth)
-{
-    size_t rows = 0;
-    size_t columns = 0;
-    size_t opponentRows = 0;
-    size_t opponentColumns = 0;
-    // Searching rows and columns
-    for (size_t i = 0; i < this->size; i++)
-    {
-        rows = 0;
-        columns = 0;
-        opponentColumns = 0;
-        opponentRows = 0;
-        for (size_t j = 0; j < this->size; j++)
-        {
-            if (this->board[i][j] == playerSign)
-            {
-                opponentRows++;
-                if (opponentRows == this->wincondition)
-                    return -1 - this->maxDepth + depth;
-            }
-            else
-            {
-                opponentRows = 0;
-            }
-
-            if (this->board[i][j] == AIsign) 
-            {
-                rows++;
-                if (rows == this->wincondition)
-                    return 1 + this->maxDepth - depth;
-            }
-            else
-            {
-                rows = 0;
-            }
-            
-
-            if (this->board[j][i] == playerSign)
-            {
-                opponentColumns++;
-                if (opponentColumns == this->wincondition)
-                    return -1 - this->maxDepth + depth;
-            }
-            else
-            {
-                opponentColumns = 0;
-            }
-
-            if (this->board[j][i] == AIsign)
-            {
-                columns++;
-                if (columns == this->wincondition)
-                    return 1 + this->maxDepth - depth;
-            }
-            else
-            {
-                columns = 0;
-            }
-            
-
-        }
-    }
-    size_t diagonal1 = 0;
-    size_t diagonal2 = 0;
-    size_t opponentDiagonal1 = 0;
-    size_t opponentDiagonal2 = 0;
-    // Searching diagonals
-    for (size_t i = 0; i <= this->size - this->wincondition; i++) {
-        for (size_t j = 0; j < this->size; j++) {
-            diagonal1 = 0;
-            diagonal2 = 0;
-            opponentDiagonal1 = 0;
-            opponentDiagonal2 = 0;
-            for (size_t k = 0; k < this->wincondition; k++) {
-                if (i + k < this->size && j + k < this->size && this->board[i + k][j + k] == playerSign)
-                {
-                    opponentDiagonal1++;
-                    if (opponentDiagonal1 == this->wincondition)
-                        return -1 - this->maxDepth + depth;
-                }
-                else
-                {
-                    opponentDiagonal1 = 0;
-                }
-
-                if (i + k < this->size && j + k < this->size && this->board[i + k][j + k] == AIsign) 
-                {
-                    diagonal1++;
-                    if (diagonal1 == this->wincondition)
-                        return 1 + this->maxDepth - depth;
-                }
-                else
-                {
-                    diagonal1 = 0;
-                }
-
-                if (i + k < this->size && j >= k && this->board[i + k][j - k] == playerSign)
-                {
-                    opponentDiagonal2++;
-                    if (opponentDiagonal2 == this->wincondition)
-                        return -1 - this->maxDepth + depth;
-                }
-                else
-                {
-                    opponentDiagonal2 = 0;
-                }
-
-                if (i + k < this->size && j >= k && this->board[i + k][j - k] == AIsign)
-                {
-                    diagonal2++;
-                    if (diagonal2 == this->wincondition)
-                        return 1 + this->maxDepth - depth;
-                }
-                else
-                {
-                    diagonal2 = 0;
-                }
-       
-            }
-        }
-    }
-    return 0;
 }

@@ -27,6 +27,4 @@ class GameGUI
         bool isDraw(); // Check if the game is a draw
         void AITurn(char AIsign, char playerSign); // AI turn
         int minimax(char AIsign, char playerSign, size_t depth, bool isMaximizingPlayer, int alpha, int beta); // Minimax algorithm with alpha-beta pruning
-        int EvaluateState(char AIsign, char playerSign, size_t depth); // Evaluate the board 
-
 };
