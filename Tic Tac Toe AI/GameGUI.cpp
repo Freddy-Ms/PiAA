@@ -261,30 +261,17 @@ void GameGUI::AITurn(char AIsign, char playerSign)
     bestMove randomBestMove = (*Moves)[randomNumber];
     delete Moves;
     this->board[randomBestMove.first][randomBestMove.second] = AIsign;
-
 }
 
 int GameGUI::minimax(char AIsign, char playerSign, size_t depth, bool isMaximizingPlayer, int alpha, int beta)
 {
-  
+    if(depth == this->maxDepth || isDraw())
+        return 0;  
     if(isWin(AIsign))
-    {
         return 1 + this->maxDepth - depth;
-    }
-    else if(isWin(playerSign))
-    {
-        return -1 - this->maxDepth + depth;
-    }
-    else if(isDraw())
-    {
-        return 0;
-    }
-    else if (depth == maxDepth)
-    {
-        return 0;
-    }
-    
-  
+    if(isWin(playerSign))
+        return -1 - this->maxDepth + depth; 
+
     if (isMaximizingPlayer)
     {
         int bestScore = INT_MAX;
