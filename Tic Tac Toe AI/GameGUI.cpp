@@ -1,5 +1,8 @@
 #include "GameGUI.h"
 #include <iostream>
+#include<random>
+#include<ctime>
+#include<vector>
 using namespace std;
 
 GameGUI::GameGUI(int size, int wincondition) : window(sf::VideoMode(800, 600), "Tic Tac Toe"), size(size), wincondition(wincondition)
@@ -13,7 +16,7 @@ GameGUI::GameGUI(int size, int wincondition) : window(sf::VideoMode(800, 600), "
             board[i][j] = ' ';
         }
     }
-    maxDepth = 8; // Default value
+    maxDepth = 5; // Default value
 }
 
 GameGUI::~GameGUI()
@@ -37,17 +40,42 @@ void GameGUI::run()
 void GameGUI::EventHandler()
 {
     sf::Event event;
+    while (this->AItoMove && this->running)
+    {
+        AITurn('O', 'X');
+        this->AItoMove = false;
+        if (isWin('O')) 
+        {
+            cout << " AI won!" << endl;
+            this->running = false;
+        }
+        else if (isDraw())
+        {
+            cout << "Draw!" << endl;
+            this->running = false;
+        }
+    }
     while (window.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
         {
             window.close();
         }
+
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            if (event.mouseButton.button == sf::Mouse::Left)
+            if (event.mouseButton.button == sf::Mouse::Right)
             {
-                size_t x = (event.mouseButton.y) / (window.getSize().y / this->size) ;
+                if (this->firstMove) {
+                    this->AItoMove = true;
+                    this->firstMove = false;
+                }
+            }
+            else if (event.mouseButton.button == sf::Mouse::Left && this->running)
+            {
+                this->firstMove = false;
+                this->AItoMove = true;
+                size_t x = (event.mouseButton.y) / (window.getSize().y / this->size);
                 size_t y = (event.mouseButton.x) / (window.getSize().x / this->size);
                 if (isValidMove(x, y))
                 {
@@ -55,29 +83,20 @@ void GameGUI::EventHandler()
                     if (isWin('X'))
                     {
                         cout << "You won!" << endl;
-                       // window.close();
+                        this->running = false;
                     }
                     else if (isDraw())
                     {
                         cout << "Draw!" << endl;
-                       // window.close();
-                    }
-                    else
-                    {
-                        AITurn('O', 'X');
-                        if (isWin('O'))
-                        {
-                            cout << "AI won!" << endl;
-                           // window.close();
-                        }
-                        else if (isDraw())
-                        {
-                            cout << "Draw!" << endl;
-                            //window.close();
-                        }
+                        this->running = false;
                     }
                 }
             }
+            else
+            {
+                window.close();
+            }
+     
         }
     }
 }
@@ -214,8 +233,7 @@ bool GameGUI::isDraw()
 void GameGUI::AITurn(char AIsign, char playerSign)
 {
     int bestScore = INT_MIN;
-    int bestRow = -1;
-    int bestColumn = -1;
+    vector<bestMove>* Moves = new vector<bestMove>();
 
     for (size_t i = 0; i < this->size; i++)
     {
@@ -228,20 +246,27 @@ void GameGUI::AITurn(char AIsign, char playerSign)
                 if (score > bestScore)
                 {
                     bestScore = score;
-                    bestRow = i;
-                    bestColumn = j;
+                    Moves->clear();
+                    Moves->emplace_back(i, j);
+                }
+                else if(score == bestScore)
+                {
+                    Moves->emplace_back(i, j);
                 }
             }
         }
     }
-
-    this->board[bestRow][bestColumn] = AIsign;
+    srand(time(0));
+    int randomNumber = rand() % Moves->size();
+    bestMove randomBestMove = (*Moves)[randomNumber];
+    delete Moves;
+    this->board[randomBestMove.first][randomBestMove.second] = AIsign;
 
 }
 
 int GameGUI::minimax(char AIsign, char playerSign, size_t depth, bool isMaximizingPlayer, int alpha, int beta)
 {
-    if (depth == maxDepth) 
+    if (depth == maxDepth) //|| isWin(AIsign) || isWin(playerSign) || isDraw())
     {
         return EvaluateState(AIsign, playerSign, depth);  
     }

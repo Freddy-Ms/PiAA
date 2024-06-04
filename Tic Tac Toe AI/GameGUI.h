@@ -11,6 +11,10 @@ class GameGUI
         void run(); // Process events and draw
         ~GameGUI(); // Destructor
     private:
+        typedef pair<int, int> bestMove;
+        bool AItoMove = false;
+        bool firstMove = true;
+        bool running = true;
         sf::RenderWindow window; // Window from SFML
         size_t size; // Size of the board
         size_t wincondition; // Number of signs in a row,column or diagnolas to win
