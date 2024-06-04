@@ -21,8 +21,8 @@ class GameGUI
         bool isValidMove(int x, int y); // Check if the move is valid
         bool isWin(char sign); // Check if the player with the sign has won
         bool isDraw(); // Check if the game is a draw
-        void AITurn(char sign, char opponentSign); // AI turn
-        int minimax(char sign, char opponentSign, size_t depth, bool isMaximizingPlayer, int alpha, int beta); // Minimax algorithm with alpha-beta pruning
-        int EvaluateState(char sign, char opponentSign, size_t depth); // Evaluate the board 
+        void AITurn(char AIsign, char playerSign); // AI turn
+        int minimax(char AIsign, char playerSign, size_t depth, bool isMaximizingPlayer, int alpha, int beta); // Minimax algorithm with alpha-beta pruning
+        int EvaluateState(char AIsign, char playerSign, size_t depth); // Evaluate the board 
 
 };

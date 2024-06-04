@@ -1,16 +1,2 @@
-﻿  GameGUI.cpp
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(52,20): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(224,16): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(231,32): warning C4267: "=": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(232,35): warning C4267: "=": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(257,20): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(280,20): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(317,55): warning C4267: "return": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(328,54): warning C4267: "return": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(340,55): warning C4267: "return": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(351,54): warning C4267: "return": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(377,59): warning C4267: "return": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(388,58): warning C4267: "return": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(399,59): warning C4267: "return": konwersja z "size_t" do "int", możliwa utrata danych
-C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\GameGUI.cpp(410,58): warning C4267: "return": konwersja z "size_t" do "int", możliwa utrata danych
+﻿  main.cpp
   Tic Tac Toe AI.vcxproj -> C:\Users\Macie\OneDrive\Dokumenty\GitHub\git\PiAA\Tic Tac Toe AI\x64\Debug\Tic Tac Toe AI.exe
